@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zombie Step 2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0e27; color: #e8f4ff;
+    font-family: -apple-system, sans-serif;
+    padding: 16px; max-width: 480px; margin: 0 auto;
+    min-height: 100vh;
+  }
+  h1 { color: #7dff5a; font-size: 22px; margin-bottom: 10px; }
+  h2 { color: #7dff5a; font-size: 18px; margin-bottom: 12px; }
+  h3 { color: #ff2e2e; font-size: 14px; margin-bottom: 8px; }
+  p { line-height: 1.55; font-size: 14px; margin-bottom: 8px; }
+  .muted { color: #8a9bb8; font-size: 12px; }
+
+  .card {
+    background: rgba(20, 25, 55, 0.9);
+    border: 1px solid rgba(125, 255, 90, 0.2);
+    border-radius: 14px; padding: 14px; margin-bottom: 12px;
+  }
+  .card.danger { border-color: rgba(255, 46, 46, 0.4); }
+
+  button {
+    display: block; width: 100%;
+    padding: 14px; margin-top: 10px;
+    background: #7dff5a; color: #001a00;
+    border: none; border-radius: 12px;
+    font-size: 15px; font-weight: bold;
+    font-family: inherit; cursor: pointer;
+  }
+  button:active { transform: scale(0.97); }
+  button.secondary {
+    background: transparent;
+    border: 1.5px solid #7dff5a; color: #7dff5a;
+  }
+  button.danger { background: #ff2e2e; color: #fff; }
+
+  input {
+    width: 100%; padding: 12px; margin-top: 8px;
+    background: rgba(0,0,0,0.4);
+    border: 1.5px solid rgba(125,255,90,0.3);
+    border-radius: 10px; color: #fff;
+    font-size: 14px; font-family: inherit;
+    outline: none;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  ul { list-style: none; padding: 0; }
+  ul li {
+    padding: 7px 0 7px 22px;
+    position: relative; font-size: 13px;
+    border-bottom: 1px dashed rgba(125,255,90,0.15);
+  }
+  ul li:last-child { border-bottom: none; }
+  ul li::before {
+    content: '☣'; position: absolute; left: 0;
+    color: #7dff5a; font-weight: bold;
+  }
+
+  #log {
+    position: fixed; bottom: 8px; left: 8px;
+    background: rgba(0,0,0,0.7); color: #7dff5a;
+    font-size: 10px; padding: 4px 8px;
+    border-radius: 6px; font-family: monospace;
+    max-width: 200px;
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<section id="screen-intro" class="screen active">
+  <h1>🧟 Zombie Apocalypse<br>English Survival</h1>
+
+  <div class="card">
+    <h3>📖 Deskripsi Game</h3>
+    <p>Sekolahmu berubah jadi <b>zona zombie</b>! Kamu dan kelompokmu adalah siswa yang masih hidup. Untuk bertahan, kalian <b>wajib berkomunikasi dalam Bahasa Inggris</b>.</p>
+    <p>Selesaikan <b>5 level survival</b> dengan skill berbeda: Vocabulary, Reading, Speaking, Writing, dan Grammar.</p>
+    <p><b>Bahasa Inggris adalah senjatamu!</b></p>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Tujuan Pembelajaran</h3>
+    <p class="muted">Kelas VIII — melatih 4 skill bahasa Inggris melalui permainan survival.</p>
+  </div>
+
+  <button id="btnToRules">📜 Lihat Aturan →</button>
+</section>
+
+<!-- RULES -->
+<section id="screen-rules" class="screen">
+  <h2>📜 Aturan Permainan</h2>
+
+  <div class="card">
+    <h3>🎮 Cara Bermain</h3>
+    <ul>
+      <li>Main dalam <b>kelompok 3–4 orang</b></li>
+      <li>Setiap pemain mulai dengan <b>5 HP</b></li>
+      <li>Jawaban <b>benar = +1 Supply</b></li>
+      <li>Jawaban <b>salah = -1 HP</b></li>
+      <li>HP habis = <b>Game Over</b></li>
+    </ul>
+  </div>
+
+  <div class="card danger">
+    <h3>☣ Zombie Card (Kejutan Guru)</h3>
+    <ul>
+      <li>Guru bisa keluarkan <b>Zombie Card</b> kapan saja</li>
+      <li>Muncul <b>Panic Challenge</b> dadakan</li>
+      <li>Berhasil = <b>+2 Supply</b></li>
+      <li>Gagal = <b>-1 HP</b></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🏆 Kemenangan</h3>
+    <ul>
+      <li>Selesaikan <b>5 level</b> tanpa HP mencapai 0</li>
+      <li>Supply terbanyak = <b>Survivor Champion</b></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>📋 5 Level</h3>
+    <ul>
+      <li><b>Level 1</b> — Find the Weapon (Vocabulary)</li>
+      <li><b>Level 2</b> — Read the Survival Manual (Reading)</li>
+      <li><b>Level 3</b> — Negotiate with Survivors (Speaking)</li>
+      <li><b>Level 4</b> — Write SOS Message (Writing)</li>
+      <li><b>Level 5</b> — Final Stand (Grammar Speed Quiz)</li>
+    </ul>
+  </div>
+
+  <button id="btnToHome">✅ Saya Siap! Masuk Game</button>
+  <button class="secondary" id="btnBackIntro">← Kembali</button>
+</section>
+
+<!-- HOME -->
+<section id="screen-home" class="screen">
+  <h2>🧟 Survival Dashboard</h2>
+
+  <div class="card">
+    <h3>👤 Nama Survivor</h3>
+    <input type="text" id="inputName" placeholder="Tulis namamu..." maxlength="16">
+    <button id="btnStartGame">🚀 Masuk Zona Zombie</button>
+  </div>
+
+  <div class="card">
+    <h3>📊 Status</h3>
+    <p class="muted" id="homeStats">❤️ HP: 5 · 📦 Supply: 0</p>
+    <p class="muted" id="homeName">Survivor: —</p>
+  </div>
+
+  <button class="secondary" id="btnShowRules">📜 Lihat Aturan Lagi</button>
+  <button class="danger" id="btnReset">🗑️ Reset Game</button>
+</section>
+
+<div id="log">Log: siap</div>
+
+<script>
+  console.log('=== Step 2 Loaded ===');
+
+  // Log helper
+  var logEl = document.getElementById('log');
+  function log(msg) {
+    console.log(msg);
+    if (logEl) logEl.textContent = 'Log: ' + msg;
+  }
+
+  // State sederhana
+  var state = {
+    playerName: 'Survivor',
+    hp: 5,
+    supply: 0
+  };
+
+  // Helper navigasi
+  function showScreen(id) {
+    var all = document.querySelectorAll('.screen');
+    for (var i = 0; i < all.length; i++) {
+      all[i].classList.remove('active');
+    }
+    var el = document.getElementById(id);
+    if (el) el.classList.add('active');
+  }
+
+  // ============ EVENT LISTENERS ============
+  document.getElementById('btnToRules').onclick = function () {
+    log('Pindah ke Rules');
+    showScreen('screen-rules');
+  };
+
+  document.getElementById('btnBackIntro').onclick = function () {
+    log('Kembali ke Intro');
+    showScreen('screen-intro');
+  };
+
+  document.getElementById('btnToHome').onclick = function () {
+    log('Masuk ke Home');
+    showScreen('screen-home');
+  };
+
+  document.getElementById('btnShowRules').onclick = function () {
+    log('Lihat Rules lagi');
+    showScreen('screen-rules');
+  };
+
+  document.getElementById('btnStartGame').onclick = function () {
+    var inp = document.getElementById('inputName');
+    var name = inp.value.trim();
+    if (!name) {
+      alert('⚠️ Tulis nama dulu ya!');
+      return;
+    }
+    state.playerName = name;
+    document.getElementById('homeName').textContent = 'Survivor: ' + name;
+    log('Halo, ' + name + '!');
+    alert('🚀 Selamat datang, ' + name + '!\\n\\nKamu siap masuk zona zombie.\\nSiap-siap untuk level 1!');
+  };
+
+  document.getElementById('btnReset').onclick = function () {
+    if (confirm('Reset semua data?')) {
+      state = { playerName: 'Survivor', hp: 5, supply: 0 };
+      document.getElementById('inputName').value = '';
+      document.getElementById('homeName').textContent = 'Survivor: —';
+      document.getElementById('homeStats').textContent = '❤️ HP: 5 · 📦 Supply: 0';
+      log('Reset selesai');
+      alert('🗑️ Data direset!');
+    }
+  };
+
+  log('Semua tombol terpasang ✅');
+</script>
+</body>
+</html>
